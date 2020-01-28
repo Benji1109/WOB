@@ -39,3 +39,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+
+# created files
+error.log
+report.json
