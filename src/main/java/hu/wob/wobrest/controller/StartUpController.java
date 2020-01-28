@@ -27,11 +27,12 @@ public class StartUpController {
         try {
             this.map.init();
             logger.info("Entity consumed, parsed and validated to local DB");
-            Thread.sleep(5000);
+            Thread.sleep(3000);
             File f = FileService.writeJsonToFile(this.cr.reportInJson());
             logger.info("Report created, parsed and write to the file");
-            Thread.sleep(5000);
+            Thread.sleep(3000);
             this.ftp.open();
+            logger.info("FTP opened");
             this.ftp.uploadFile(f);
         } catch (Exception e) {
             logger.error(e.getMessage());
