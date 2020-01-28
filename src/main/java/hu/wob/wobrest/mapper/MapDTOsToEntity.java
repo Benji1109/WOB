@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,7 @@ import hu.wob.wobrest.service.file.FileService;
 @Component
 @Transactional
 public class MapDTOsToEntity {
+    Logger logger = LoggerFactory.getLogger(MapDTOsToEntity.class);
 
     @Autowired
     private ListingDTOConsumeService listingDTOConsumeService;
@@ -91,12 +94,12 @@ public class MapDTOsToEntity {
 
                     validateListing(dtoApplications, errors, listing, findById3, findById, findById2, violations);
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    logger.error(e.getMessage());
                 }
             }
             FileService.writeObjectToFile(errors);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -144,7 +147,7 @@ public class MapDTOsToEntity {
             dtoApplications.forEach(e -> this.listingStatusRepository.saveAndFlush(e));
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -158,7 +161,7 @@ public class MapDTOsToEntity {
                     });
             dtoApplications.forEach(e -> this.marketplaceRepository.saveAndFlush(e));
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -172,7 +175,7 @@ public class MapDTOsToEntity {
                     });
             dtoApplications.forEach(e -> this.locationRepository.saveAndFlush(e));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.info(e.getMessage());
         }
     }
 

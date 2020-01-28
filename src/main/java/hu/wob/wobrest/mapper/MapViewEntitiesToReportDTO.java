@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,7 @@ import hu.wob.wobrest.repository.report.TotalAndMonthlyEmailAndListingReportRepo
 
 @Component
 public class MapViewEntitiesToReportDTO {
+    Logger logger = LoggerFactory.getLogger(MapViewEntitiesToReportDTO.class);
 
     @Autowired
     private TotalAndMonthlyEmailAndListingReportRepository enums;
@@ -42,7 +45,7 @@ public class MapViewEntitiesToReportDTO {
             reportDTO = mapper.convertValue(dtoApplications, new TypeReference<ReportDTO>() {
             });
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         return this.mergeReportElements(this.viewReportByMarketplace(), reportDTO);
     }
@@ -62,7 +65,7 @@ public class MapViewEntitiesToReportDTO {
                 }));
             }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         return reportDTOs;
     }

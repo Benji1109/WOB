@@ -2,6 +2,8 @@ package hu.wob.wobrest.controller;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import hu.wob.wobrest.service.ftp.FtpClient;
 
 @Service
 public class StartUpController {
+    Logger logger = LoggerFactory.getLogger(StartUpController.class);
 
     @Autowired
     private MapDTOsToEntity map;
@@ -23,15 +26,15 @@ public class StartUpController {
     public void init() {
         try {
             this.map.init();
-            System.out.println("Entity consumed, parsed and validated to local DB");
+            logger.info("Entity consumed, parsed and validated to local DB");
             Thread.sleep(5000);
             File f = FileService.writeJsonToFile(this.cr.reportInJson());
-            System.out.println("Report created, parsed and write to the file");
+            logger.info("Report created, parsed and write to the file");
             Thread.sleep(5000);
             this.ftp.open();
             this.ftp.uploadFile(f);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 }

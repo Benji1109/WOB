@@ -1,5 +1,7 @@
 package hu.wob.wobrest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +12,7 @@ import hu.wob.wobrest.controller.StartUpController;
 
 @SpringBootApplication
 public class DemoApplication {
+	Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
 	@Autowired
 	private StartUpController s;
@@ -20,9 +23,9 @@ public class DemoApplication {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void doSomethingAfterStartup() {
-		System.out.println("Starting...");
+		logger.info("Starting...");
 		this.s.init();
-		System.out.println("Finishing...");
+		logger.info("Finishing...");
 	}
 
 }

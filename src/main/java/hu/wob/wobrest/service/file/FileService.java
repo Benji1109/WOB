@@ -32,14 +32,10 @@ public class FileService {
         printWriter.close();
     }
 
-    public static File writeJsonToFile(ReportDTO r) {
+    public static File writeJsonToFile(ReportDTO r) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         File resultFile = new File(System.getProperty("user.dir") + "\\" + REPORT_NAME);
-        try {
-            mapper.writeValue(resultFile, r);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mapper.writeValue(resultFile, r);
         return resultFile;
     }
 
