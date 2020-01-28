@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Service
 public class FileService {
-    private static String FILE_NAME = "error.txt";
+    private static String FILE_NAME = "error.log";
     private static String REPORT_NAME = "report.json";
 
     public static void writeObjectToFile(List<ErrorMesseage> errors) throws IOException {
